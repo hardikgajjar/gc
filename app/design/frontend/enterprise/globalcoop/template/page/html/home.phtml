@@ -1,0 +1,230 @@
+<?php
+
+$login_links = new Mage_Customer_Block_Form_Login();
+$products1 = new Krish_Home_Block_Product();
+$products2 = new Krish_Home_Block_Product();
+$products3 = new Krish_Home_Block_Product();
+$catalog_block = new Mage_Catalog_Block_Product();
+$catalog_view_block = new Mage_Catalog_Block_Product_View();
+$_helper = $this->helper('catalog/output');
+
+$firstProduct = $products1->getProducts(1);
+$secondProduct = $products2->getProducts(2);
+$thirdProduct = $products3->getProducts(3);
+
+?>
+<div class="content-area">
+    <div class="bg-top">      
+        <div class="bg-bottom">
+            <div class="banner">
+                <!-- home banner image -->
+                <div class="banner-img">
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_banner')->toHtml() ?>
+                </div>
+                <!-- end home banner image -->
+                <div class="banner-content">
+                    <!-- home banner text -->
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_banner_text')->toHtml() ?>
+                    <!-- end home banner text -->
+                    <!-- login form -->
+                    <?php if (!$this->helper('customer')->isLoggedIn()): ?>
+                        <form action="<?php echo $login_links->getPostActionUrl() ?>" method="post" id="login-form" class="login-form">
+                            <div class="login-content">
+                                <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+                                <h2><?php echo $this->__('Registered Customers') ?></h2>
+                                <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+                                <input name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" type="text" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" />
+                                <label for="pass" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
+                                <input name="login[password]" type="password" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" />
+                                <div class="login-links">
+                                    <p class="frg-pwd"><a href="<?php echo $login_links->getForgotPasswordUrl() ?>"><?php echo $this->__('Forgot Your Password?') ?></a></p>
+                                    <button type="submit" class="login" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
+                                    <p class="not-member"><?php echo $this->__('Not a member ?') ?></p>
+                                </div>
+                                <div class="callout-block">
+                                    <div class="callout">
+                                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_login_callout')->toHtml() ?>
+                                    </div>
+                                    <button type="button" class="register-now" onclick="window.location='<?php echo $login_links->getCreateAccountUrl() ?>';"><span><span><?php echo $this->__('Register') ?></span></span></button>
+                                </div>
+                                <p class="view-more"><a title="Læs mere" href="#"><?php echo $this->__('view more') ?> &gt;</a></p>
+                            </div>
+                            <div class="login-form-bot"></div>
+                        </form>
+                    <?php endif; ?>
+                    <!-- end login form -->
+                    <script type="text/javascript">
+                        //<![CDATA[
+                        var dataForm = new VarienForm('login-form', true);
+                        //]]>
+                    </script>
+                </div>
+                <div class="pramotion">
+                    <!-- first product -->
+                    <div class="product">
+                        <div class="price-block">
+                        	<?php echo $catalog_block->getPriceHtml($firstProduct, false) ?>
+                            <?php if ($firstProduct->isSaleable()): ?>
+                                <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $catalog_view_block->getAddToCartUrl($firstProduct) ?>')"><span class="btn-cart-wrapper"><span class="btn-cart-upper"><?php echo $this->__('Add to Cart') ?></span><span class="btn-cart-lower"><?php echo $this->__('Add to Cart') ?></span></span></button>
+                            <?php else: ?>
+                                <?php if ($firstProduct->getIsSalable()): ?>
+                                    <p class="availability in-stock"><span><?php echo $this->__('In stock') ?></span></p>
+                                <?php else: ?>
+                                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="product-sec">
+                            <div class="price-tag">
+                                <span>-35%</span>
+                            </div>
+                            <div class="image">
+                                <a href="<?php echo $firstProduct->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($firstProduct, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($firstProduct, 'small_image')->resize(142, 111); ?>" width="142" height="111" alt="<?php echo $this->stripTags($this->getImageLabel($firstProduct, 'small_image'), null, true) ?>" /></a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="brand">
+                            <img src="<?php echo $this->getSkinUrl('images/brand-logo.jpg') ?>" alt="brand logo" />
+                            <?php $_productNameStripped = $this->stripTags($firstProduct->getName(), null, true); ?>
+                            <?php $_productSubTitleStripped = $this->stripTags($firstProduct->getSubTitle(), null, true); ?>
+                            <p class="title" id="first-product-title"><?php echo $_productNameStripped ?></p>
+                            <p class="title" id="first-product-subtitle"><?php echo $_productSubTitleStripped ?></p>
+                        </div>
+                        <script type="text/javascript">
+                            $('first-product-title').truncate(25);
+                            $('first-product-subtitle').truncate(25);
+                        </script>
+                    </div>
+                    <!-- end first product -->
+                    <!-- Home banner services -->
+                    <div class="information">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_banner_services')->toHtml() ?>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- end Home banner services -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-area">
+    <div class="bg-top">
+        <div class="bg-bottom">
+            <div class="homeproduct-area">
+                <div class="inner-producthome">
+                    <!-- second product -->
+                    <div class="left-content">
+                        <div class="prod-block">
+                            <div class="best-seller-lft">
+                                <div class="price-tag1"><span>-35%</span></div>
+                                <div class="prod-img">
+                                    <a href="<?php echo $secondProduct->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($secondProduct, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($secondProduct, 'small_image')->resize(117, 292); ?>" width="117" height="292" alt="<?php echo $this->stripTags($this->getImageLabel($secondProduct, 'small_image'), null, true) ?>" /></a>
+                                </div>
+                                <div class="prod-info">
+                                    <div class="prod-dec-block">
+                                        <?php $_productNameStripped = $this->stripTags($secondProduct->getName(), null, true); ?>
+                                        <h2 class="title" id="second-product-title"><?php echo $_productNameStripped ?></h2>
+                                        <p class="description" id="second-product-desc"><?php echo $_helper->productAttribute($secondProduct, $secondProduct->getShortDescription(), 'short_description') ?></p>
+                                        <script type="text/javascript">
+                                            $('second-product-desc').truncate(120);
+                                        </script>
+                                    </div>
+                                    <div class="price-section">
+                                        <?php echo $catalog_block->getPriceHtml($secondProduct, false) ?>
+                                        <?php if ($secondProduct->isSaleable()): ?>
+                                            <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $catalog_view_block->getAddToCartUrl($secondProduct) ?>')"><span class="btn-cart-wrapper"><span class="btn-cart-upper"><?php echo $this->__('Add to Cart') ?></span><span class="btn-cart-lower"><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                        <?php else: ?>
+                                            <?php if ($secondProduct->getIsSalable()): ?>
+                                                <p class="availability in-stock"><span><?php echo $this->__('In stock') ?></span></p>
+                                            <?php else: ?>
+                                                <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div> 
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end second product -->
+                    <!-- third product -->
+                    <div class="rgt-content">
+                        <div class="right-productarea">
+                            <div class="price-tag1"><span>-35%</span></div>
+                            <div class="pro-img">
+                                <a href="<?php echo $thirdProduct->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($thirdProduct, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($thirdProduct, 'small_image')->resize(107, 147); ?>" width="107" height="147" alt="<?php echo $this->stripTags($this->getImageLabel($thirdProduct, 'small_image'), null, true) ?>" /></a>
+                            </div>
+                            <div class="prod-info">
+                                <div class="price-section">
+                                    <?php echo $catalog_block->getPriceHtml($thirdProduct, false) ?>
+                                    <?php if ($thirdProduct->isSaleable()): ?>
+                                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $catalog_view_block->getAddToCartUrl($thirdProduct) ?>')"><span class="btn-cart-wrapper"><span class="btn-cart-upper"><?php echo $this->__('Add to Cart') ?></span><span class="btn-cart-lower"><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                    <?php else: ?>
+                                        <?php if ($thirdProduct->getIsSalable()): ?>
+                                            <p class="availability in-stock"><span><?php echo $this->__('In stock') ?></span></p>
+                                        <?php else: ?>
+                                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="prod-dec-block">
+                                    <?php $_productNameStripped = $this->stripTags($thirdProduct->getName(), null, true); ?>
+                                    <h2 class="title"><?php echo $_productNameStripped ?></h2>
+                                    <p class="description" id="third-product-desc"><?php echo $_helper->productAttribute($thirdProduct, $thirdProduct->getShortDescription(), 'short_description') ?></p>
+                                    <script type="text/javascript">
+                                        $('third-product-desc').truncate(140);
+                                    </script>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>	         
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_facebook_like')->toHtml() ?>
+                    </div>
+                    <!-- end third product -->
+                    <div class="clear">&nbsp;</div>
+                </div>
+                <div class="product-slider">
+                    <div class="heading-content">
+                        <h2><?php echo $this->__('Popular items') ?></h2>
+                        <div id="control-btn">
+                            <ul id="other">
+
+                                <li><a href="javascript:void(0);" id="play" class="pause"></a></li>
+                                <li><a href="javascript:void(0);" id="previous"><img src="<?php echo $this->getSkinUrl('images/slider-icon_03.jpg')?>" alt="" /></a></li>
+                                <li><a href="javascript:void(0)" id="next"><img src="<?php echo $this->getSkinUrl('images/slider-icon_05.jpg')?>"  alt="next" /></a></li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div> 
+                    </div>
+                    <?php echo $this->getChildHtml('home.bestsellers.list') ?>
+                    <script type="text/javascript">
+                            var slider = new Horinaja('product-sliders',0.3,4,true);
+                            $("play").observe("click",function(element){
+                                if($(this).hasClassName("pause")) {
+                                    slider.stopPe();
+                                    $(this).addClassName("play");
+                                    $(this).removeClassName("pause");
+                                } else {
+                                    console.log(slider);
+                                    slider.startPe();
+                                    $(this).addClassName("pause");
+                                    $(this).removeClassName("play");
+                                }
+                            });
+                            $("next").observe("click",function(element){
+                                slider.Pe();
+                            });	
+                            $("previous").observe("click",function(element){
+                                slider.prPe();
+                            });
+                    </script>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"> &nbsp;</div>
+    </div>
+</div>
+<div class="clear">&nbsp;</div>

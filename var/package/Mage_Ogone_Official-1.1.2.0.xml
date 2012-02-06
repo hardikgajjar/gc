@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Mage_Ogone_Official</name>
+    <version>1.1.2.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License (OSL 3.0)</license>
+    <channel>enterprise</channel>
+    <extends/>
+    <summary>Official Ogone Payment Services Integration Module</summary>
+    <description>This extension provides Ogone payment services integration.</description>
+    <notes>1.1.2.0</notes>
+    <authors><author><name>Magento Enterprise Team</name><user>core</user><email>core@magentocommerce.com</email></author></authors>
+    <date>2011-08-01</date>
+    <time>17:00:47</time>
+    <contents><target name="magecore"><dir name="Mage"><dir name="Ogone"><dir name="Block"><file name="Form.php" hash="7a55446746887fa1e8bb562b0c4aa7e3"/><file name="Info.php" hash="0d2398fedd1d68efa0492e8e04e99d07"/><file name="Paypage.php" hash="5987f9a033cd966ab760bbc1d01d7ba2"/><file name="Placeform.php" hash="79b72fee4360475f386f964bec98532e"/></dir><dir name="Helper"><file name="Data.php" hash="55cc379c6d2c2c7c02ba2606076b2faf"/></dir><dir name="Model"><dir name="Api"><file name="Debug.php" hash="af1d8d0b9211b7dde1434deb089ea3a7"/></dir><file name="Api.php" hash="e097610aff6f97a161d559b0feb747af"/><file name="Config.php" hash="206a88ae5c1626b5e3f746104bfb201b"/><dir name="Mysql4"><dir name="Api"><file name="Debug.php" hash="3b241e375cbf52e253951a6564868fa6"/></dir></dir><dir name="Source"><file name="PaymentAction.php" hash="566cec4af7e66790dda38d3ec7663f82"/><file name="Pmlist.php" hash="07e1be8bb51ff5a274dead1bc8180079"/><file name="Template.php" hash="25276d9524c9a6faf8d255795bc0e5af"/></dir></dir><dir name="controllers"><file name="ApiController.php" hash="6c57cf63e9cbbf00eaa92f25c1223918"/></dir><dir name="etc"><file name="config.xml" hash="104f006d976dcc7846d3c7824c35d94a"/><file name="system.xml" hash="af408e65e69aaa98b13125d88bf36df8"/></dir><dir name="sql"><dir name="ogone_setup"><file name="install-1.6.0.0.php" hash="5f724b4e31f38b8dfa21366f489edfc1"/><file name="mysql4-install-0.0.1.php" hash="c52e1e597fbb52cbe0e6d5d321c0975b"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Mage_Ogone.xml" hash="af3b06bfa6d29c767a5bd483e9246fb5"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="ogone"><file name="form.phtml" hash="38c565ddd02b8addbeb3c4be3f774697"/><file name="info.phtml" hash="d1096198f86f2f505bb1d1a80df8ca09"/><file name="paypage.phtml" hash="7295e6c43f97dca50fc955a66e0371bd"/><file name="placeform.phtml" hash="a2fae06ba81e95dbccca878d820c4776"/></dir></dir><dir name="layout"><file name="ogone.xml" hash="c9fa05c15494a0cb8d655a4c7a103593"/></dir></dir></dir></dir><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="ogone"><file name="info.phtml" hash="48c27a45cb1346ca8dd79276822af687"/></dir></dir></dir></dir></dir></target><target name="magelocale"><dir name="en_US"><file name="Mage_Ogone.csv" hash="e23ef05c79f21e4cbdb4d08c00f59223"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php><package><name>Mage_Core_Modules</name><channel>enterprise</channel><min>1.11.0.0</min><max>1.12.0.0</max></package></required></dependencies>
+</package>

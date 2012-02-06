@@ -1,0 +1,221 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view">
+    <?php echo $this->getChildHtml('breadcrumbsContainer') ?>
+    <div class="left-content">
+        <div class="product-img-box">
+            <?php echo $this->getChildHtml('media') ?>
+        </div>
+        <div class="product-detail">
+            <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                <div class="no-display">
+                    <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                </div>
+                <div class="pro-price">
+                    <div class="product-dece">
+                        <h3><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h3>
+                        <?php $sub_title = $_helper->productAttribute($_product, $_product->getSubTitle(), 'sub-title') ?>
+                        <?php if (!empty($sub_title)): ?>
+                            <h5><?php echo $sub_title ?></h5>
+                        <?php endif; ?>
+                        <div class="price-col">
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                            <?php echo $this->getChildHtml('tierprices') ?>
+                            <?php echo $this->getChildHtml('extrahint') ?>
+                            <div class="clear"></div>
+                        </div>
+                        <?php if (!$this->hasOptions()): ?>
+                            <?php if ($_product->isSaleable()): ?>
+                                <?php echo $this->getChildHtml('addtocart') ?>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container1')): ?>
+                                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="fb-like"><a href="#"><img alt="fb" src="<?php echo $this->getSkinUrl('images/fb-like.jpg') ?>" /></a></div> 
+                    <?php echo $this->getChildHtml('other'); ?>
+                </div>
+                <div class="pro-desc">
+                    <h4><?php echo $this->__('Description') ?></h4>
+                    <p>
+                        <?php echo $_product->getDescription() ?>
+                    </p>
+                </div>
+                <div class="clearer"></div>
+                <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container2')): ?>
+                    <div class="options-container-big">
+                        <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                    </div>
+                <?php endif; ?>
+            </form>
+        </div>
+        <div class="clear"></div>
+        <!-- product slider -->
+        <div class="product-slider">
+            <div class="heading-content">
+                <h2><?php echo $this->__('Popular items') ?></h2>
+                <div id="control-btn">
+                    <ul id="other">
+                        <li><a href="javascript:void(0);" id="play" class="pause"></a></li>
+                        <li><a href="javascript:void(0);" id="previous"><img src="<?php echo $this->getSkinUrl('images/slider-icon_03.jpg') ?>" alt="" /></a></li>
+                        <li><a href="javascript:void(0)" id="next"><img src="<?php echo $this->getSkinUrl('images/slider-icon_05.jpg') ?>"  alt="next" /></a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div> 
+                
+            </div>
+            <?php echo $this->getChildHtml('home.bestsellers.list') ?>
+            <script type="text/javascript">
+                var slider = new Horinaja('product-sliders',0.3,4,true);
+                $("play").observe("click",function(element){
+                    if($(this).hasClassName("pause")) {
+                        slider.stopPe();
+                        $(this).addClassName("play");
+                        $(this).removeClassName("pause");
+                    } else {
+                        console.log(slider);
+                        slider.startPe();
+                        $(this).addClassName("pause");
+                        $(this).removeClassName("play");
+                    }
+                });
+                $("next").observe("click",function(element){
+                    slider.Pe();
+                });	
+                $("previous").observe("click",function(element){
+                    slider.prPe();
+                });
+                
+                //set description limit
+                $$(".pro-desc p")[0].truncate(500);
+            </script>
+            <div class="clear"></div>
+        </div>
+        <!-- end product slider -->
+    </div>
+    <!-- right content -->
+    <div class="right-content">
+        <div class="product-info-block contact">
+            <div class="info-block">
+                <div class="topbg">
+                    <div class="bottom-bg">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('need_help')->toHtml() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-info-block faq">
+            <div class="info-block">
+                <div class="topbg">
+                    <div class="bottom-bg">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('faq')->toHtml() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-info-block rating">
+            <div class="info-block">
+                <div class="topbg">
+                    <div class="bottom-bg">
+                        <img alt="rating" src="<?php echo $this->getSkinUrl('images/rating_06.jpg') ?>" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-info-block faq">
+            <div class="info-block">
+                <div class="topbg">
+                    <div class="bottom-bg">
+                        <div class="tittle"><span><span>Promotion</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end right content -->
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+    //<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function(button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+    //]]>
+</script>
